@@ -44,10 +44,19 @@ public class DT {
 		return null;
 	}
 	
-	public int valorDaMaioria(ArrayList<String> atrib) {
-		
-		
-		return 0; 
+	public int valorDaMaioria(ArrayList<Exemplo> ex) {
+		int[] ocor = new int[6];
+		for(int i = 0; i < ex.size(); i++) {
+			ocor[ex.get(i).rate]++;
+		}
+		int max = 0, maxval = 0;
+		for(int i = 0; i< 6; i++) {
+			if(ocor[i] > maxval) {
+				max = i;
+				maxval = ocor[i];
+			}
+		}
+		return max; 
 	}
 	
 	public boolean sameRate(ArrayList<Exemplo> ex) {
