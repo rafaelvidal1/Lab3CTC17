@@ -2,6 +2,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DT {
+	String[] atributos = {"gender", "age", "ocupation", "genres"};
+	ArrayList<Exemplo> exemplos = new ArrayList<Exemplo>();
+	
+	
 	
 	
 	public static void main(String[] args) {
