@@ -16,6 +16,7 @@ public class DT {
 		
 		NohArvore noh = new NohArvore();
 		if(ex.size() == 0) {
+			noh.atributo = "rate";
 			
 		}
 		
