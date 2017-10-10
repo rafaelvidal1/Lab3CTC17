@@ -5,13 +5,13 @@ public class DT {
 	
 	
 	public static void main(String[] args) {
-		exemplo e1 = new exemplo("M", "ação", 19, 0, 1999, 4);
-		exemplo e2 = new exemplo("M", "ficção", 35, 0, 1995, 2);
-		exemplo e3 = new exemplo("F", "romance", 20, 2, 1999, 5);
-		exemplo e4 = new exemplo("M", "ação", 50, 0, 1996, 3);
-		exemplo e5 = new exemplo("F", "comédia", 28, 4, 1990, 4);
+		Exemplo e1 = new Exemplo("M", "aï¿½ï¿½o", 19, 0, 4);
+		Exemplo e2 = new Exemplo("M", "ficï¿½ï¿½o", 35, 0, 2);
+		Exemplo e3 = new Exemplo("F", "romance", 20, 2, 5);
+		Exemplo e4 = new Exemplo("M", "aï¿½ï¿½o", 50, 0, 3);
+		Exemplo e5 = new Exemplo("F", "comï¿½dia", 28, 4, 4);
 		
-		List<exemplo> exemplos = new ArrayList<exemplo>();
+		List<Exemplo> exemplos = new ArrayList<Exemplo>();
 		exemplos.add(e1);
 		exemplos.add(e2);
 		exemplos.add(e3);
