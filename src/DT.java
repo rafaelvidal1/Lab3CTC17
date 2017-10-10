@@ -2,18 +2,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DT {
-	String[] atributos = {"gender", "age", "ocupation", "genres"};
+	ArrayList<String> atributos = new ArrayList<String>();
 	ArrayList<Exemplo> exemplos = new ArrayList<Exemplo>();
 	
+	public DT() {
+		atributos.add("gender");
+		atributos.add("age");
+		atributos.add("ocupation");
+		atributos.add("genres");
+	}
 	
-	
+	public NohArvore aprendizagemEmArvoreDeDecisao(ArrayList<Exemplo> ex, ArrayList<String> atrib, int m) {
+		
+		NohArvore noh = new NohArvore();
+		if(ex.size() == 0) {
+			
+		}
+		
+		
+		ArrayList<String> atributosAux = new ArrayList<String>();
+		ArrayList<Exemplo> exemplosAux = new ArrayList<Exemplo>();
+		for(int i = 0; i < atrib.size(); i++) {
+			atributosAux.add(atrib.get(i));
+		}
+		for(int i = 0; i < atrib.size(); i++) {
+			exemplosAux.add(ex.get(i));
+		}
+		
+		
+		
+		
+		return null;
+	}
 	
 	public static void main(String[] args) {
-		Exemplo e1 = new Exemplo("M", "a��o", 19, 0, 4);
-		Exemplo e2 = new Exemplo("M", "fic��o", 35, 0, 2);
-		Exemplo e3 = new Exemplo("F", "romance", 20, 2, 5);
-		Exemplo e4 = new Exemplo("M", "a��o", 50, 0, 3);
-		Exemplo e5 = new Exemplo("F", "com�dia", 28, 4, 4);
+		Exemplo e1 = new Exemplo("M", "a��o", "19", "0", "4");
+		Exemplo e2 = new Exemplo("M", "fic��o", "35", "0", "2");
+		Exemplo e3 = new Exemplo("F", "romance", "20", "2", "5");
+		Exemplo e4 = new Exemplo("M", "a��o", "50", "0", "3");
+		Exemplo e5 = new Exemplo("F", "com�dia", "28", "4", "4");
 		
 		List<Exemplo> exemplos = new ArrayList<Exemplo>();
 		exemplos.add(e1);

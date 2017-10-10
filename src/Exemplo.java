@@ -2,9 +2,9 @@
 public class Exemplo {
 	String gender;
 	String genre;
-	int age,occupation,classifier;
+	String age,occupation,classifier;
 	
-	Exemplo(String gender, String genre, int age, int occupation, int classifier){
+	Exemplo(String gender, String genre, String age, String occupation, String classifier){
 		this.gender=gender;
 		this.genre=genre;
 		this.age=age;
