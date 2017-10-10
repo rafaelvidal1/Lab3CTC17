@@ -26,9 +26,12 @@ public class DT {
 			noh.filhos = null;
 		}
 		if(atrib.size() == 0) {
-			
-			
+			noh.atributo = "rate";
+			noh.resp.add(Integer.toString(this.valorDaMaioria(ex)));
+			noh.filhos = null;
 		}
+		
+		
 		ArrayList<String> atributosAux = new ArrayList<String>();
 		ArrayList<Exemplo> exemplosAux = new ArrayList<Exemplo>();
 		for(int i = 0; i < atrib.size(); i++) {
