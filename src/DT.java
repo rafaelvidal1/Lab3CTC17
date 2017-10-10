@@ -17,10 +17,18 @@ public class DT {
 		NohArvore noh = new NohArvore();
 		if(ex.size() == 0) {
 			noh.atributo = "rate";
+			noh.resp.add(Integer.toString(m));
+			noh.filhos = null;
+		}
+		if(this.sameRate(ex)) {
+			noh.atributo = "rate";
+			noh.resp.add(Integer.toString(ex.get(0).rate));
+			noh.filhos = null;
+		}
+		if(atrib.size() == 0) {
+			
 			
 		}
-		
-		
 		ArrayList<String> atributosAux = new ArrayList<String>();
 		ArrayList<Exemplo> exemplosAux = new ArrayList<Exemplo>();
 		for(int i = 0; i < atrib.size(); i++) {
@@ -36,12 +44,25 @@ public class DT {
 		return null;
 	}
 	
+	public int valorDaMaioria(ArrayList<String> atrib) {
+		
+		
+		return 0; 
+	}
+	
+	public boolean sameRate(ArrayList<Exemplo> ex) {
+		int aux = ex.get(0).rate;
+		for(int i = 1; i < ex.size(); i++)
+			if(ex.get(i).rate != aux) return false;
+		return true;		
+	}
+	
 	public static void main(String[] args) {
-		Exemplo e1 = new Exemplo("M", "a��o", "19", "0", "4");
-		Exemplo e2 = new Exemplo("M", "fic��o", "35", "0", "2");
-		Exemplo e3 = new Exemplo("F", "romance", "20", "2", "5");
-		Exemplo e4 = new Exemplo("M", "a��o", "50", "0", "3");
-		Exemplo e5 = new Exemplo("F", "com�dia", "28", "4", "4");
+		Exemplo e1 = new Exemplo("M", "a��o", "19", "0", 4);
+		Exemplo e2 = new Exemplo("M", "fic��o", "35", "0", 2);
+		Exemplo e3 = new Exemplo("F", "romance", "20", "2", 5);
+		Exemplo e4 = new Exemplo("M", "a��o", "50", "0", 3);
+		Exemplo e5 = new Exemplo("F", "com�dia", "28", "4", 4);
 		
 		List<Exemplo> exemplos = new ArrayList<Exemplo>();
 		exemplos.add(e1);
