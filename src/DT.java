@@ -16,25 +16,27 @@ public class DT {
 		atributos.add("genres");
 	}
 	
-	public NohArvore aprendizagemEmArvoreDeDecisao(ArrayList<Exemplo> ex, ArrayList<String> atrib, int m) {
+	public NohArvore aprendizagemEmArvoreDeDecisao(ArrayList<Exemplo> ex, ArrayList<String> atrib, int padrao) {
 		
 		NohArvore noh = new NohArvore();
 		if(ex.size() == 0) {
 			noh.atributo = "rate";
-			noh.resp.add(Integer.toString(m));
+			noh.resp.add(Integer.toString(padrao));
 			noh.filhos = null;
+			return noh;
 		}
 		if(this.sameRate(ex)) {
 			noh.atributo = "rate";
 			noh.resp.add(Integer.toString(ex.get(0).rate));
 			noh.filhos = null;
+			return noh;
 		}
 		if(atrib.size() == 0) {
 			noh.atributo = "rate";
 			noh.resp.add(Integer.toString(this.valorDaMaioria(ex)));
 			noh.filhos = null;
+			return noh;
 		}
-		
 		
 		ArrayList<String> atributosAux = new ArrayList<String>();
 		ArrayList<Exemplo> exemplosAux = new ArrayList<Exemplo>();
@@ -44,6 +46,17 @@ public class DT {
 		for(int i = 0; i < atrib.size(); i++) {
 			exemplosAux.add(ex.get(i));
 		}
+		String melhor = escolherAtributo(atributosAux, exemplosAux);
+		noh.atributo = melhor;
+		int m = valorDaMaioria(exemplosAux);
+		ArrayList<String> visitados = new ArrayList<String>();
+		
+		
+		
+		
+		
+		
+		
 		return null;
 	}
 	
