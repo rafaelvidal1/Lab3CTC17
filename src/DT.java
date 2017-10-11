@@ -47,6 +47,64 @@ public class DT {
 		return null;
 	}
 	
+	public String escolherAtributo(ArrayList<String> _atributos, ArrayList<Exemplo> _exemplos) {
+		double entropia=0;
+		String melhor="";
+		for(int i = 0; i<_atributos.size();i++) {
+			double entropiaAux=0;
+			List<String> resp = new ArrayList<String>();
+			List<Integer> somaResp = new ArrayList<Integer>();
+			for(int j=0 ; j<_exemplos.size();j++) {
+				switch(_atributos.get(i)) {
+					case "Gender":
+						if(resp.contains(_exemplos.get(j).gender)) {
+							somaResp.add(resp.indexOf(_exemplos.get(j).gender), somaResp.get(resp.indexOf(_exemplos.get(j).gender))+1);
+						}
+						else {
+							resp.add(_exemplos.get(j).gender);
+							somaResp.add(resp.indexOf(_exemplos.get(j).gender), 1);
+						}
+					case "Genre":
+						if(resp.contains(_exemplos.get(j).genre)) {
+							somaResp.add(resp.indexOf(_exemplos.get(j).genre), somaResp.get(resp.indexOf(_exemplos.get(j).genre))+1);
+						}
+						else {
+							resp.add(_exemplos.get(j).genre);
+							somaResp.add(resp.indexOf(_exemplos.get(j).genre), 1);
+						}
+					case "Age":
+						if(resp.contains(_exemplos.get(j).age)) {
+							somaResp.add(resp.indexOf(_exemplos.get(j).age), somaResp.get(resp.indexOf(_exemplos.get(j).age))+1);
+						}
+						else {
+							resp.add(_exemplos.get(j).age);
+							somaResp.add(resp.indexOf(_exemplos.get(j).age), 1);
+						}
+					case "Occupation":
+						if(resp.contains(_exemplos.get(j).occupation)) {
+							somaResp.add(resp.indexOf(_exemplos.get(j).occupation), somaResp.get(resp.indexOf(_exemplos.get(j).occupation))+1);
+						}
+						else {
+							resp.add(_exemplos.get(j).occupation);
+							somaResp.add(resp.indexOf(_exemplos.get(j).occupation), 1);
+						}
+				}
+			}
+			
+			for(i=0;i<resp.size();i++) {
+				entropiaAux=entropiaAux + (-somaResp.get(i)/_exemplos.size())*Math.log(somaResp.get(i)/_exemplos.size());
+			}
+			
+			if(entropiaAux>entropia) {
+				entropia=entropiaAux;
+				melhor=_atributos.get(i);
+			}
+		}
+		
+		return melhor;
+		
+	}
+	
 	public int valorDaMaioria(ArrayList<Exemplo> ex) {
 		int[] ocor = new int[6];
 		for(int i = 0; i < ex.size(); i++) {
