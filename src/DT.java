@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,10 +44,6 @@ public class DT {
 		for(int i = 0; i < atrib.size(); i++) {
 			exemplosAux.add(ex.get(i));
 		}
-		
-		
-		
-		
 		return null;
 	}
 	
@@ -69,7 +69,22 @@ public class DT {
 		return true;		
 	}
 	
-	public static void main(String[] args) {
+	public void lerDoArquivo() throws IOException {
+		BufferedReader in = new BufferedReader(new FileReader("/home/spider/Programas/Eclipse/Workspace/Lab3CTC17/src/Exemplos.txt"));
+		String line;
+		while((line = in.readLine()) != null){
+		    //System.out.println(line);
+		    this.exemplos.add(new Exemplo(line.split(";")[0], 
+		    		line.split(";")[3], 
+		    		line.split(";")[1], 
+		    		line.split(";")[2], 
+		    		Integer.parseInt(line.split(";")[4])));
+		    //System.out.println(line.split(";")[0]+ line.split(";")[3]+line.split(";")[1]+line.split(";")[2]+Integer.parseInt(line.split(";")[4]));
+		}
+		in.close();
+	}
+	
+	public static void main(String[] args) throws IOException {
 		Exemplo e1 = new Exemplo("M", "a��o", "19", "0", 4);
 		Exemplo e2 = new Exemplo("M", "fic��o", "35", "0", 2);
 		Exemplo e3 = new Exemplo("F", "romance", "20", "2", 5);
@@ -92,6 +107,9 @@ public class DT {
 		atributos.add("classifier");
 		
 		int padrao=3;
+		
+		DT dt = new DT();
+		dt.lerDoArquivo();
 		
 		
 	}
