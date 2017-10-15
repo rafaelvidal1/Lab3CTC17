@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,80 +42,208 @@ public class DT {
 		for(int i = 0; i < atrib.size(); i++) {
 			atributosAux.add(atrib.get(i));
 		}
-		for(int i = 0; i < atrib.size(); i++) {
+		for(int i = 0; i < ex.size(); i++) {
 			exemplosAux.add(ex.get(i));
 		}
+		
+		System.out.println(atributosAux.size());
+		System.out.println(exemplosAux.size());
+		
 		String melhor = escolherAtributo(atributosAux, exemplosAux);
+		
+		System.out.println("O melhor é " + melhor);
+		
+		atributosAux.remove(atributosAux.indexOf(melhor));
+		
 		noh.atributo = melhor;
 		int m = valorDaMaioria(exemplosAux);
-		ArrayList<String> visitados = new ArrayList<String>();
+		ArrayList<Exemplo> exemplotemp;
 		
-		
-		
-		
-		
-		
-		
-		return null;
+		while(!exemplosAux.isEmpty()) {
+			exemplotemp = new ArrayList<Exemplo>();
+			String vi = exemplosAux.get(0).getAtributeValue(melhor);
+			int i = 0;
+			while(i < exemplosAux.size()) {
+				if(exemplosAux.get(i).getAtributeValue(melhor) == vi) {
+					exemplotemp.add(exemplosAux.remove(i));
+				}else {
+					i++;
+				}
+			}
+			System.out.println(vi);
+			NohArvore subarvore = new NohArvore();
+			subarvore = aprendizagemEmArvoreDeDecisao(exemplotemp, atributosAux, m);
+			noh.filhos.add(subarvore);
+		}
+		System.out.println("Saiu da recursao aqui");
+		return noh;
 	}
 	
 	public String escolherAtributo(ArrayList<String> _atributos, ArrayList<Exemplo> _exemplos) {
-		double entropia=0;
+		//double entropia=0;
 		String melhor="";
-		for(int i = 0; i<_atributos.size();i++) {
-			double entropiaAux=0;
-			List<String> resp = new ArrayList<String>();
-			List<Integer> somaResp = new ArrayList<Integer>();
+		//for(int i = 0; i<_atributos.size();i++) {
+		//	System.out.println(atributos.get(i));
+			//double entropiaAux = 0;
+			List<String> respGender = new ArrayList<String>();
+			List<Integer> somaRespGender = new ArrayList<Integer>();
+			List<String> respAge = new ArrayList<String>();
+			List<Integer> somaRespAge = new ArrayList<Integer>();
+			List<String> respOcupation = new ArrayList<String>();
+			List<Integer> somaRespOcupation = new ArrayList<Integer>();
+			List<String> respGenres = new ArrayList<String>();
+			List<Integer> somaRespGenres = new ArrayList<Integer>();
+			
+			boolean gender = _atributos.contains("gender");
+			boolean age = _atributos.contains("age");
+			boolean ocupation = _atributos.contains("ocupation");
+			boolean genres = _atributos.contains("genres");
+			
+			//System.out.println(_exemplos.size());
 			for(int j=0 ; j<_exemplos.size();j++) {
-				switch(_atributos.get(i)) {
-					case "Gender":
-						if(resp.contains(_exemplos.get(j).gender)) {
-							somaResp.add(resp.indexOf(_exemplos.get(j).gender), somaResp.get(resp.indexOf(_exemplos.get(j).gender))+1);
-						}
-						else {
-							resp.add(_exemplos.get(j).gender);
-							somaResp.add(resp.indexOf(_exemplos.get(j).gender), 1);
-						}
-					case "Genre":
-						if(resp.contains(_exemplos.get(j).genre)) {
-							somaResp.add(resp.indexOf(_exemplos.get(j).genre), somaResp.get(resp.indexOf(_exemplos.get(j).genre))+1);
-						}
-						else {
-							resp.add(_exemplos.get(j).genre);
-							somaResp.add(resp.indexOf(_exemplos.get(j).genre), 1);
-						}
-					case "Age":
-						if(resp.contains(_exemplos.get(j).age)) {
-							somaResp.add(resp.indexOf(_exemplos.get(j).age), somaResp.get(resp.indexOf(_exemplos.get(j).age))+1);
-						}
-						else {
-							resp.add(_exemplos.get(j).age);
-							somaResp.add(resp.indexOf(_exemplos.get(j).age), 1);
-						}
-					case "Occupation":
-						if(resp.contains(_exemplos.get(j).occupation)) {
-							somaResp.add(resp.indexOf(_exemplos.get(j).occupation), somaResp.get(resp.indexOf(_exemplos.get(j).occupation))+1);
-						}
-						else {
-							resp.add(_exemplos.get(j).occupation);
-							somaResp.add(resp.indexOf(_exemplos.get(j).occupation), 1);
-						}
+				//System.out.println(j);
+				if(gender)
+					if(respGender.contains(_exemplos.get(j).getAtributeValue("gender"))) {
+						int i = respGender.indexOf(_exemplos.get(j).getAtributeValue("gender"));
+						somaRespGender.add( i, somaRespGender.get(i)+1);
+					}else {
+						respGender.add(_exemplos.get(j).getAtributeValue("gender"));
+						somaRespGender.add(1);
+					}
+				if(age)
+					if(respAge.contains(_exemplos.get(j).getAtributeValue("age"))) {
+						int i = respAge.indexOf(_exemplos.get(j).getAtributeValue("age"));
+						somaRespAge.add( i, somaRespAge.get(i)+1);
+					}else {
+						respAge.add(_exemplos.get(j).getAtributeValue("age"));
+						somaRespAge.add(1);
+					}
+				if(ocupation)
+					if(respOcupation.contains(_exemplos.get(j).getAtributeValue("ocupation"))) {
+						int i = respOcupation.indexOf(_exemplos.get(j).getAtributeValue("ocupation"));
+						somaRespOcupation.add( i, somaRespOcupation.get(i)+1);
+					}else {
+						respOcupation.add(_exemplos.get(j).getAtributeValue("ocupation"));
+						somaRespOcupation.add(1);
+					}
+				if(genres)
+					if(respGenres.contains(_exemplos.get(j).getAtributeValue("genres"))) {
+						int i = respGenres.indexOf(_exemplos.get(j).getAtributeValue("genres"));
+						somaRespGenres.add( i, somaRespGenres.get(i)+1);
+					}else {
+						respGenres.add(_exemplos.get(j).getAtributeValue("genres"));
+						somaRespGenres.add(1);
+					}
+			}
+			
+			double entropiaAux = 0;
+			double size = _exemplos.size();
+			if(gender){
+				double entropiaAuxGender = 0;
+				for(int j=0 ; j<respGender.size();j++) {
+					double p = somaRespGender.get(j)/size;
+					entropiaAuxGender += (-p)*Math.log(p);
+				}
+				if(entropiaAux <= entropiaAuxGender) {
+					entropiaAux = entropiaAuxGender;
+					melhor = "gender";
 				}
 			}
-			
-			for(i=0;i<resp.size();i++) {
-				entropiaAux=entropiaAux + (-somaResp.get(i)/_exemplos.size())*Math.log(somaResp.get(i)/_exemplos.size());
+			if(age){
+				double entropiaAuxAge = 0;
+				for(int j=0 ; j<respAge.size();j++) {
+					double p = somaRespAge.get(j)/size;
+					entropiaAuxAge += (-p)*Math.log(p);					
+				}
+				if(entropiaAux <= entropiaAuxAge) {
+					entropiaAux = entropiaAuxAge;
+					melhor = "age";
+				}
 			}
-			
-			if(entropiaAux>entropia) {
-				entropia=entropiaAux;
-				melhor=_atributos.get(i);
+			if(ocupation){
+				double entropiaAuxOcupation = 0;
+				for(int j=0 ; j<respOcupation.size();j++) {
+					double p = somaRespOcupation.get(j)/size;
+					entropiaAuxOcupation += (-p)*Math.log(p);					
+				}
+				if(entropiaAux <= entropiaAuxOcupation) {
+					entropiaAux = entropiaAuxOcupation;
+					melhor = "ocupation";
+				}
 			}
-		}
+			if(genres){
+				double entropiaAuxGenres = 0;
+				for(int j=0 ; j<respGenres.size();j++) {
+					double p = somaRespGenres.get(j)/size;
+					entropiaAuxGenres += (-p)*Math.log(p);					
+				}
+				if(entropiaAux <= entropiaAuxGenres) {
+					entropiaAux = entropiaAuxGenres;
+					melhor = "genres";
+				}
+			}
+//				if(resp.contains(_exemplos.get(j).getAtributeValue(_atributos.get(i)))) {
+//					somaResp.add(resp.indexOf(_exemplos.get(j).getAtributeValue(_atributos.get(i))), 
+//							somaResp.get(resp.indexOf(_exemplos.get(j).getAtributeValue(_atributos.get(i))))+1);
+//				}
+//				else {
+//					resp.add(_exemplos.get(j).getAtributeValue(_atributos.get(i)));
+//					somaResp.add(resp.indexOf(_exemplos.get(j).getAtributeValue(_atributos.get(i))), 1);
+//				}
+//				switch(_atributos.get(i)) {
+//					case "gender":
+//						if(resp.contains(_exemplos.get(j).gender)) {
+//							somaResp.add(resp.indexOf(_exemplos.get(j).gender), somaResp.get(resp.indexOf(_exemplos.get(j).gender))+1);
+//						}
+//						else {
+//							resp.add(_exemplos.get(j).gender);
+//							somaResp.add(resp.indexOf(_exemplos.get(j).gender), 1);
+//						}
+//					case "genre":
+//						if(resp.contains(_exemplos.get(j).genre)) {
+//							somaResp.add(resp.indexOf(_exemplos.get(j).genre), somaResp.get(resp.indexOf(_exemplos.get(j).genre))+1);
+//						}
+//						else {
+//							resp.add(_exemplos.get(j).genre);
+//							somaResp.add(resp.indexOf(_exemplos.get(j).genre), 1);
+//						}
+//					case "age":
+//						if(resp.contains(_exemplos.get(j).age)) {
+//							somaResp.add(resp.indexOf(_exemplos.get(j).age), somaResp.get(resp.indexOf(_exemplos.get(j).age))+1);
+//						}
+//						else {
+//							resp.add(_exemplos.get(j).age);
+//							somaResp.add(resp.indexOf(_exemplos.get(j).age), 1);
+//						}
+//					case "occupation":
+//						if(resp.contains(_exemplos.get(j).occupation)) {
+//							somaResp.add(resp.indexOf(_exemplos.get(j).occupation), somaResp.get(resp.indexOf(_exemplos.get(j).occupation))+1);
+//						}
+//						else {
+//							resp.add(_exemplos.get(j).occupation);
+//							somaResp.add(resp.indexOf(_exemplos.get(j).occupation), 1);
+//						}
+//				}
+//			}
+			
+//			for(int j=0;j<resp.size();j++) {
+//				entropiaAux = entropiaAux + (-somaResp.get(i)/(_exemplos.size()*1.0))*Math.log(somaResp.get(i)/(_exemplos.size()*1.0));
+//			}
+//			
+//			System.out.println("Entropia Aux" + entropiaAux);
+//			
+//			if(entropiaAux > entropia) {
+//				entropia = entropiaAux;
+//				melhor = _atributos.get(i);
+//			}
+		//}
 		
+			
+		//System.out.println("Melhor é " + melhor);
 		return melhor;
 		
 	}
+	
 	
 	public int valorDaMaioria(ArrayList<Exemplo> ex) {
 		int[] ocor = new int[6];
@@ -141,7 +268,7 @@ public class DT {
 	}
 	
 	public void lerDoArquivo() throws IOException {
-		BufferedReader in = new BufferedReader(new FileReader("/home/spider/Programas/Eclipse/Workspace/Lab3CTC17/src/Exemplos.txt"));
+		BufferedReader in = new BufferedReader(new FileReader("/home/spider/git/Lab3CTC17/src/Exemplos.txt"));
 		String line;
 		while((line = in.readLine()) != null){
 		    //System.out.println(line);
@@ -181,6 +308,7 @@ public class DT {
 		
 		DT dt = new DT();
 		dt.lerDoArquivo();
+		dt.aprendizagemEmArvoreDeDecisao(dt.exemplos, dt.atributos, padrao);
 		
 		
 	}

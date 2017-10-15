@@ -12,5 +12,13 @@ public class Exemplo {
 		this.occupation=occupation;
 		this.rate=rate;
 	}
+	
+	public String getAtributeValue(String s) {
+		if(s == "gender") return this.gender;
+		if(s == "genre") return this.genre;
+		if(s == "age") return this.age;
+		if(s == "occupation") return this.occupation;
+		return null;
+	}
 
 }
