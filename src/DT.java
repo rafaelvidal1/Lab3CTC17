@@ -18,7 +18,6 @@ public class DT {
 	}
 
 	public NohArvore aprendizagemEmArvoreDeDecisao(ArrayList<Exemplo> ex, ArrayList<String> atrib, int padrao) {
-
 		NohArvore noh = new NohArvore();
 		if (ex.size() == 0) {
 			noh.atributo = "rate";
@@ -42,24 +41,19 @@ public class DT {
 		ArrayList<String> atributosAux = new ArrayList<String>();
 		ArrayList<Exemplo> exemplosAux = new ArrayList<Exemplo>();
 		for (int i = 0; i < atrib.size(); i++) {
-			atributosAux.add(atrib.get(i));
+			String s = atrib.get(i);
+			atributosAux.add(s);
 		}
 		for (int i = 0; i < ex.size(); i++) {
-			exemplosAux.add(ex.get(i));
+			Exemplo s = ex.get(i);
+			exemplosAux.add(s);
 		}
 
-//		System.out.println(atributosAux.size());
-//		System.out.println(exemplosAux.size());
-//
 		String melhor = escolherAtributo(atributosAux, exemplosAux);
 
 		System.out.println("O melhor é " + melhor);
 
 		atributosAux.remove(atributosAux.indexOf(melhor));
-
-		// for(int i = 0; i < atributosAux.size(); i++) {
-		// System.out.println(atributosAux.get(i));
-		// }
 
 		noh.atributo = melhor;
 		int m = valorDaMaioria(exemplosAux);
@@ -68,22 +62,15 @@ public class DT {
 		while (!exemplosAux.isEmpty()) {
 			exemplotemp = new ArrayList<Exemplo>();
 			String vi = exemplosAux.get(0).getAtributeValue(melhor);
-			System.out.println(vi);
 			int i = 0;
 			while (i < exemplosAux.size()) {
-//				 System.out.println(exemplosAux.get(i).getAtributeValue(melhor)+" "+vi);
-//				 System.out.println(i);
 				if (exemplosAux.get(i).getAtributeValue(melhor).contentEquals(vi)) {
-//					System.out.println("*******************************************************************************");
-//					System.out.println(exemplosAux.get(i).getAtributeValue(melhor) + "|    |" + vi + "|" + i);
-//					System.out.println("Entrou");
 					exemplotemp.add(exemplosAux.remove(i));
-					// i=0;
 				} else {
 					i++;
 				}
 			}
-//			System.out.println("Saiu " + i + "   " + exemplosAux.size());
+
 			NohArvore subarvore = new NohArvore();
 			subarvore = aprendizagemEmArvoreDeDecisao(exemplotemp, atributosAux, m);
 			noh.filhos.add(subarvore);
@@ -119,7 +106,6 @@ public class DT {
 		boolean genres = _atributos.contains("genres");
 
 		for (int j = 0; j < _exemplos.size(); j++) {
-			// System.out.println(j);
 			if (gender)
 				if (respGender.contains(_exemplos.get(j).getAtributeValue("gender"))) {
 					int i = respGender.indexOf(_exemplos.get(j).getAtributeValue("gender"));
@@ -171,6 +157,7 @@ public class DT {
 		}
 
 		double entropiaAux = 0;
+		melhor = _atributos.get(0);
 		double size = _exemplos.size();
 		if (gender) {
 			double entropiaAuxGender = 0;
@@ -178,7 +165,9 @@ public class DT {
 				double p = somaRespGender.get(j) / size;
 				entropiaAuxGender += (-p) * Math.log(p);
 			}
-			if (entropiaAux <= entropiaAuxGender) {
+			System.out.println("Entropia Gender :" + entropiaAuxGender);
+
+			if (entropiaAux < entropiaAuxGender) {
 				entropiaAux = entropiaAuxGender;
 				melhor = "gender";
 			}
@@ -189,7 +178,9 @@ public class DT {
 				double p = somaRespAge.get(j) / size;
 				entropiaAuxAge += (-p) * Math.log(p);
 			}
-			if (entropiaAux <= entropiaAuxAge) {
+			System.out.println("Entropia Age :" + entropiaAuxAge);
+
+			if (entropiaAux < entropiaAuxAge) {
 				entropiaAux = entropiaAuxAge;
 				melhor = "age";
 			}
@@ -200,7 +191,9 @@ public class DT {
 				double p = somaRespOcupation.get(j) / size;
 				entropiaAuxOcupation += (-p) * Math.log(p);
 			}
-			if (entropiaAux <= entropiaAuxOcupation) {
+			System.out.println("Entropia Ocupation :" + entropiaAuxOcupation);
+
+			if (entropiaAux < entropiaAuxOcupation) {
 				entropiaAux = entropiaAuxOcupation;
 				melhor = "ocupation";
 			}
@@ -211,7 +204,9 @@ public class DT {
 				double p = somaRespZip.get(j) / size;
 				entropiaAuxZip += (-p) * Math.log(p);
 			}
-			if (entropiaAux <= entropiaAuxZip) {
+			System.out.println("Entropia Zip :" + entropiaAuxZip);
+
+			if (entropiaAux < entropiaAuxZip) {
 				entropiaAux = entropiaAuxZip;
 				melhor = "zip";
 			}
@@ -222,7 +217,8 @@ public class DT {
 				double p = somaRespMovieId.get(j) / size;
 				entropiaAuxMovieId += (-p) * Math.log(p);
 			}
-			if (entropiaAux <= entropiaAuxMovieId) {
+			System.out.println("Entropia MovieID :" + entropiaAuxMovieId);
+			if (entropiaAux < entropiaAuxMovieId) {
 				entropiaAux = entropiaAuxMovieId;
 				melhor = "movieid";
 			}
@@ -233,7 +229,8 @@ public class DT {
 				double p = somaRespGenres.get(j) / size;
 				entropiaAuxGenres += (-p) * Math.log(p);
 			}
-			if (entropiaAux <= entropiaAuxGenres) {
+			System.out.println("Entropia Genres :" + entropiaAuxGenres);
+			if (entropiaAux < entropiaAuxGenres) {
 				entropiaAux = entropiaAuxGenres;
 				melhor = "genres";
 			}
@@ -268,11 +265,8 @@ public class DT {
 		BufferedReader in = new BufferedReader(new FileReader("/home/spider/git/Lab3CTC17/src/Exemplos.dat"));
 		String line;
 		while ((line = in.readLine()) != null) {
-			// System.out.println(line);
 			this.exemplos.add(new Exemplo(line.split(";")[2], line.split(";")[3], line.split(";")[4],
-					line.split(";")[5], line.split(";")[1], line.split(";")[6], Integer.parseInt(line.split(";")[7])));
-			// System.out.println(line.split(";")[0]+
-			// line.split(";")[3]+line.split(";")[1]+line.split(";")[2]+Integer.parseInt(line.split(";")[4]));
+					line.split(";")[5].substring(0, 3), line.split(";")[1], line.split(";")[6], Integer.parseInt(line.split(";")[7])));
 		}
 		in.close();
 	}
@@ -305,6 +299,12 @@ public class DT {
 		dt.lerDoArquivo();
 		NohArvore n = dt.aprendizagemEmArvoreDeDecisao(dt.exemplos, dt.atributos, padrao);
 		System.out.println("Terminou");
+		NohArvore naux = n;
+		while(naux.atributo != "rate") {
+			System.out.println(naux.atributo + " " + naux.filhos.get(0).atributo);
+			naux = naux.filhos.get(0);
+		}
+		System.out.println(naux.atributo);
 
 	}
 
