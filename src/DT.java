@@ -73,6 +73,7 @@ public class DT {
 
 			NohArvore subarvore = new NohArvore();
 			subarvore = aprendizagemEmArvoreDeDecisao(exemplotemp, atributosAux, m);
+			noh.resp.add(vi);
 			noh.filhos.add(subarvore);
 		}
 		return noh;
