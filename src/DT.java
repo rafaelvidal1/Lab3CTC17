@@ -51,7 +51,7 @@ public class DT {
 
 		String melhor = escolherAtributo(atributosAux, exemplosAux);
 
-		System.out.println("O melhor é " + melhor);
+		//System.out.println("O melhor é " + melhor);
 
 		atributosAux.remove(atributosAux.indexOf(melhor));
 
@@ -166,7 +166,7 @@ public class DT {
 				double p = somaRespGender.get(j) / size;
 				entropiaAuxGender += (-p) * Math.log(p);
 			}
-			System.out.println("Entropia Gender :" + entropiaAuxGender);
+			//System.out.println("Entropia Gender :" + entropiaAuxGender);
 
 			if (entropiaAux < entropiaAuxGender) {
 				entropiaAux = entropiaAuxGender;
@@ -179,7 +179,7 @@ public class DT {
 				double p = somaRespAge.get(j) / size;
 				entropiaAuxAge += (-p) * Math.log(p);
 			}
-			System.out.println("Entropia Age :" + entropiaAuxAge);
+			//System.out.println("Entropia Age :" + entropiaAuxAge);
 
 			if (entropiaAux < entropiaAuxAge) {
 				entropiaAux = entropiaAuxAge;
@@ -192,7 +192,7 @@ public class DT {
 				double p = somaRespOcupation.get(j) / size;
 				entropiaAuxOcupation += (-p) * Math.log(p);
 			}
-			System.out.println("Entropia Ocupation :" + entropiaAuxOcupation);
+			//System.out.println("Entropia Ocupation :" + entropiaAuxOcupation);
 
 			if (entropiaAux < entropiaAuxOcupation) {
 				entropiaAux = entropiaAuxOcupation;
@@ -205,7 +205,7 @@ public class DT {
 				double p = somaRespZip.get(j) / size;
 				entropiaAuxZip += (-p) * Math.log(p);
 			}
-			System.out.println("Entropia Zip :" + entropiaAuxZip);
+			//System.out.println("Entropia Zip :" + entropiaAuxZip);
 
 			if (entropiaAux < entropiaAuxZip) {
 				entropiaAux = entropiaAuxZip;
@@ -218,7 +218,7 @@ public class DT {
 				double p = somaRespMovieId.get(j) / size;
 				entropiaAuxMovieId += (-p) * Math.log(p);
 			}
-			System.out.println("Entropia MovieID :" + entropiaAuxMovieId);
+			//System.out.println("Entropia MovieID :" + entropiaAuxMovieId);
 			if (entropiaAux < entropiaAuxMovieId) {
 				entropiaAux = entropiaAuxMovieId;
 				melhor = "movieid";
@@ -230,7 +230,7 @@ public class DT {
 				double p = somaRespGenres.get(j) / size;
 				entropiaAuxGenres += (-p) * Math.log(p);
 			}
-			System.out.println("Entropia Genres :" + entropiaAuxGenres);
+			//System.out.println("Entropia Genres :" + entropiaAuxGenres);
 			if (entropiaAux < entropiaAuxGenres) {
 				entropiaAux = entropiaAuxGenres;
 				melhor = "genres";
@@ -263,13 +263,95 @@ public class DT {
 	}
 
 	public void lerDoArquivo() throws IOException {
-		BufferedReader in = new BufferedReader(new FileReader("/home/spider/git/Lab3CTC17/src/Exemplos.dat"));
+		BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\rafae\\git\\Lab3CTC17\\src\\Exemplos.dat"));
 		String line;
 		while ((line = in.readLine()) != null) {
 			this.exemplos.add(new Exemplo(line.split(";")[2], line.split(";")[3], line.split(";")[4],
 					line.split(";")[5].substring(0, 3), line.split(";")[1], line.split(";")[6], Integer.parseInt(line.split(";")[7])));
 		}
 		in.close();
+	}
+	
+	public int calculoRate(NohArvore n,List<String> filmeExemplo) {
+		
+		System.out.println("atributo: " + n.atributo);
+		
+		if(n.atributo.equals("rate")) {
+			return Integer.parseInt(n.resp.get(0));
+		}
+		
+		if(n.atributo.equals("gender")) {
+			for(String respAux : n.resp) {
+				System.out.println("respAux : " + respAux);
+				if(respAux.equals(filmeExemplo.get(0))) {
+					NohArvore naux = n.filhos.get(n.resp.indexOf(respAux));
+					return calculoRate(naux,filmeExemplo);
+				}
+			}
+		}
+		
+		if(n.atributo.equals("age")) {
+			for(String respAux : n.resp) {
+				System.out.println("respAux : " + respAux);
+				if(respAux.equals(filmeExemplo.get(1))) {
+					NohArvore naux = n.filhos.get(n.resp.indexOf(respAux));
+					return calculoRate(naux,filmeExemplo);
+				}
+			}
+		}
+		
+		if(n.atributo.equals("ocupation")) {
+			for(String respAux : n.resp) {
+				System.out.println("respAux : " + respAux);
+				if(respAux.equals(filmeExemplo.get(2))) {
+					NohArvore naux = n.filhos.get(n.resp.indexOf(respAux));
+					return calculoRate(naux,filmeExemplo);
+				}
+			}
+		}
+		
+		if(n.atributo.equals("zip")) {
+			for(String respAux : n.resp) {
+				System.out.println("respAux : " + respAux);
+				if(respAux.equals(filmeExemplo.get(3))) {
+					NohArvore naux = n.filhos.get(n.resp.indexOf(respAux));
+					return calculoRate(naux,filmeExemplo);
+				}
+			}
+		}
+		
+		if(n.atributo.equals("movieid")) {
+			for(String respAux : n.resp) {
+				System.out.println("respAux : " + respAux);
+				if(respAux.equals(filmeExemplo.get(4))) {
+					NohArvore naux = n.filhos.get(n.resp.indexOf(respAux));
+					return calculoRate(naux,filmeExemplo);
+				}
+			}
+		}
+		
+		if(n.atributo.equals("genres")) {
+			for(String respAux : n.resp) {
+				System.out.println("respAux : " + respAux);
+				if(respAux.equals(filmeExemplo.get(5))) {
+					NohArvore naux = n.filhos.get(n.resp.indexOf(respAux));
+					return calculoRate(naux,filmeExemplo);
+				}
+			}
+		}
+		
+		/*for(String respAux : n.resp) {
+			System.out.println("respAux : " + respAux);
+			for(String filmeExemploAux : filmeExemplo) {
+				if(respAux.equals(filmeExemploAux)) {
+					filmeExemplo.remove(filmeExemploAux);
+					NohArvore naux = n.filhos.get(n.resp.indexOf(respAux));
+					return calculoRate(naux,filmeExemplo);
+				}
+			}
+		}*/
+		return -1;
+		
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -299,13 +381,24 @@ public class DT {
 		DT dt = new DT();
 		dt.lerDoArquivo();
 		NohArvore n = dt.aprendizagemEmArvoreDeDecisao(dt.exemplos, dt.atributos, padrao);
-		System.out.println("Terminou");
+		//System.out.println("Terminou");
 		NohArvore naux = n;
 		while(naux.atributo != "rate") {
-			System.out.println(naux.atributo + " " + naux.filhos.get(0).atributo);
+			//System.out.println(naux.atributo + " " + naux.filhos.get(0).atributo);
 			naux = naux.filhos.get(0);
 		}
-		System.out.println(naux.atributo);
+		
+		List<String> filmeExemplo = new ArrayList<String>();
+		filmeExemplo.add("F"); //Gender
+		filmeExemplo.add("18");	//Age
+		filmeExemplo.add("4");	//Occupation
+		filmeExemplo.add("973");	//ZipCode
+		filmeExemplo.add("48");	//MovieID
+		filmeExemplo.add("Children's|Comedy");	//Genre
+		
+		
+		int rate = dt.calculoRate(n,filmeExemplo);
+		System.out.println("Rate : " + rate);
 
 	}
 
